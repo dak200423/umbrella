@@ -4,9 +4,9 @@ require "http"
 require "json"
 
 pp "Where are you located?"
-user_location = gets.chomp.gsub(" ", "%20")
+ # user_location = gets.chomp.gsub(" ", "%20") DELETE COMMENT AT THE END
 
-# user_location = "Chicago"
+ user_location = "Chicago"
 
 pp user_location
 
@@ -23,3 +23,10 @@ location_hash = geometry_hash.fetch("location")
 
 pp latitude = location_hash.fetch("lat")
 pp longitude = location_hash.fetch("lng")
+
+pirate_weather_url = "https://api.pirateweather.net/forecast/" + ENV.fetch("PIRATE_WEATHER_KEY") + "/" + latitude.to_s + "," + longitude.to_s
+
+raw_response_pirate = HTTP.get(pirate_weather_url)
+parsed_response_pirate = JSON.parse(raw_response_pirate)
+
+pp parsed_response_pirate
